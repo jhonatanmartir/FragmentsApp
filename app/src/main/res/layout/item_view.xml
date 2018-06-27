@@ -62,7 +62,7 @@
                 android:orientation="horizontal"
                 android:paddingTop="8dp">
 
-                <View
+                <ImageView
                     android:id="@+id/imgStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

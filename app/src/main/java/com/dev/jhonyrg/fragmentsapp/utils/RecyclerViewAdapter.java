@@ -82,7 +82,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @BindView(R.id.txtvDescription)  TextView description;
         @BindView(R.id.txtvDate)  TextView date;
         @BindView(R.id.ibtnDelete) ImageButton delete;
-        @BindView(R.id.imgStatus) View status;
+        @BindView(R.id.imgStatus) ImageView status;
         @BindView(R.id.cvItem) CardView cardView;
         @BindView(R.id.lytDelete) LinearLayout layout;
 
@@ -109,21 +109,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             switch (itemToDo.getStatus())
             {
                 case WAIT:
-                    //this.status.setImageResource(R.drawable.calendar_clock);
+                    this.status.setImageResource(R.drawable.calendar_clock);
                     this.cardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.backgroundWaitColor));
                     this.layout.setBackgroundResource(R.color.backgroundDeleteWaitColor);
                     this.delete.setBackgroundResource(R.color.backgroundDeleteWaitColor);
                     break;
 
                 case DONE:
-                    //this.status.setImageResource(R.drawable.calendar_check);
+                    this.status.setImageResource(R.drawable.calendar_check);
                     this.cardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.backgroundDoneColor));
                     this.layout.setBackgroundResource(R.color.backgroundDeleteDoneColor);
                     this.delete.setBackgroundResource(R.color.backgroundDeleteDoneColor);
                     break;
 
                 case CRITICAL:
-                    //this.status.setImageResource(R.drawable.calendar_late);
+                    this.status.setImageResource(R.drawable.calendar_late);
                     this.cardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.backgroundCriticalColor));
                     this.layout.setBackgroundResource(R.color.backgroundDeleteCriticalColor);
                     this.delete.setBackgroundResource(R.color.backgroundDeleteCriticalColor);
