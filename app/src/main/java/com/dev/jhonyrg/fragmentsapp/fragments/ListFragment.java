@@ -140,7 +140,30 @@ public class ListFragment extends Fragment implements
 
     @Override
     public void onItemLongClick(final ToDo itemToDo, int position, View view) {
-        
+        layoutDelete = view.findViewById(R.id.lytDelete);
+        buttonDelete = view.findViewById(R.id.ibtnDelete);
+
+        if(layoutDelete.getVisibility() == View.GONE)
+        {
+            layoutDelete.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            layoutDelete.setVisibility(View.GONE);
+        }
+
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
+                //code api
+                ApiCaller caller = ApiClient.setTaskDelete(ListFragment.this, itemToDo.getId().toString());
+                caller.setContextActivity(getActivity());
+                caller.execute();
+
+                fillList();
+            }
+        });
     }
 
     @OnClick(R.id.fabAdd)
