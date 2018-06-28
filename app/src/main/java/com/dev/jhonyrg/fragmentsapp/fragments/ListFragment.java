@@ -80,7 +80,6 @@ public class ListFragment extends Fragment implements
         this.rvToDo.setLayoutManager(new LinearLayoutManager(getActivity()));
         this.rvToDo.setAdapter(this.adapter);
         this.rvToDo.setItemAnimator(new DefaultItemAnimator());
-        registerForContextMenu(this.rvToDo);
 
         //code api
         this.fillList();
@@ -140,8 +139,8 @@ public class ListFragment extends Fragment implements
     }
 
     @Override
-    public void onItemLongClick(ToDo itemToDo, int position, View view) {
-
+    public void onItemLongClick(final ToDo itemToDo, int position, View view) {
+        
     }
 
     @OnClick(R.id.fabAdd)

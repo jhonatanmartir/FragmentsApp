@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.dev.jhonyrg.fragmentsapp.items.ToDo;
 import com.dev.jhonyrg.fragmentsapp.R;
 import com.dev.jhonyrg.fragmentsapp.items.ToDo;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -82,7 +83,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @BindView(R.id.txtvDescription)  TextView description;
         @BindView(R.id.txtvDate)  TextView date;
         @BindView(R.id.ibtnDelete) ImageButton delete;
-        @BindView(R.id.imgStatus) View status;
+        @BindView(R.id.imgStatus) ImageView status;
         @BindView(R.id.cvItem) CardView cardView;
         @BindView(R.id.lytDelete) LinearLayout layout;
 
@@ -110,6 +111,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             {
                 case WAIT:
                     //this.status.setImageResource(R.drawable.calendar_clock);
+                    Picasso.get().load(R.drawable.calendar_clock).into(this.status);
                     this.cardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.backgroundWaitColor));
                     this.layout.setBackgroundResource(R.color.backgroundDeleteWaitColor);
                     this.delete.setBackgroundResource(R.color.backgroundDeleteWaitColor);
@@ -117,6 +119,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 case DONE:
                     //this.status.setImageResource(R.drawable.calendar_check);
+                    Picasso.get().load(R.drawable.calendar_check).into(this.status);
                     this.cardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.backgroundDoneColor));
                     this.layout.setBackgroundResource(R.color.backgroundDeleteDoneColor);
                     this.delete.setBackgroundResource(R.color.backgroundDeleteDoneColor);
@@ -124,6 +127,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 case CRITICAL:
                     //this.status.setImageResource(R.drawable.calendar_late);
+                    Picasso.get().load(R.drawable.calendar_late).into(this.status);
                     this.cardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.backgroundCriticalColor));
                     this.layout.setBackgroundResource(R.color.backgroundDeleteCriticalColor);
                     this.delete.setBackgroundResource(R.color.backgroundDeleteCriticalColor);

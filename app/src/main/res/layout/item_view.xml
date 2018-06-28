@@ -15,7 +15,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -62,11 +63,12 @@
                 android:orientation="horizontal"
                 android:paddingTop="8dp">
 
-                <View
+                <ImageView
                     android:id="@+id/imgStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/calendar_remove" />
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/calendar_remove" />
 
                 <TextView
                     android:id="@+id/txtvDate"
@@ -108,7 +110,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/secondaryDarkColor"
-                android:src="@drawable/delete_forever" />
+                app:srcCompat="@drawable/delete_forever" />
+
         </LinearLayout>
 
     </LinearLayout>
