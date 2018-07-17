@@ -2,17 +2,14 @@
     <string name="app_name">Fragments App</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tEdit">Edit ToDo</string>
     <string name="txtvTitle">Title</string>
     <string name="txtvDescription">Description</string>
     <string name="txtvDate">Date</string>
     <string name="btnSave">Save</string>
-    <string name="btnCalcel">Cancel</string>
+    <string name="btnCancel">Cancel</string>
     <string name="error">This field is necessary</string>
     <string name="itmDelete">Delete</string>
-    <string name="itmDone">Set Done</string>
-    <string name="swStatus">Status ToDo</string>
+    <string name="swStatus">Status</string>
     <string name="rbWait">Currently</string>
     <string name="rbDone">Done</string>
     <string name="rbCritical">Critical</string>

@@ -1,17 +1,18 @@
 package com.dev.jhonyrg.fragmentsapp.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -31,22 +32,31 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.LandingAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 public class ListFragment extends Fragment implements
         RecyclerViewAdapter.OnItemClickListener,
         RecyclerViewAdapter.OnItemLogClickListener,
-        OnApiCallFinish {
+        OnApiCallFinish, SwipeRefreshLayout.OnRefreshListener {
 
-    private static final String TAG = "MainActivity";
-    static final int TODO_REQUEST = 11;
+    private static final int CREATE = 1;
+    private static final int UPDATE = 2;
+
     private RecyclerViewAdapter adapter;
-    LinearLayout layoutDelete;
-    ImageButton buttonDelete;
+    private LinearLayout layoutDelete;
+    private ImageButton buttonDelete;
 
-    @BindView(R.id.rvToDo)RecyclerView rvToDo;
-    @BindView(R.id.fabAdd)FloatingActionButton fabAdd;
+    @BindView(R.id.swpRefresh) SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.rvToDo) RecyclerView rvToDo;
 
-    private OnFragmentInteractionListener mListener;
+    private OnItemToDoListener mListener;
 
     public ListFragment() {
         // Required empty public constructor
@@ -55,14 +65,11 @@ public class ListFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            //mParam1 = getArguments().getString(ARG_PARAM1);
-            //mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list, container, false);
@@ -78,8 +85,23 @@ public class ListFragment extends Fragment implements
         List<ToDo> toDoList = new ArrayList<>();
         this.adapter = new RecyclerViewAdapter(toDoList, R.layout.item_view, this, this, getActivity());
         this.rvToDo.setLayoutManager(new LinearLayoutManager(getActivity()));
-        this.rvToDo.setAdapter(this.adapter);
-        this.rvToDo.setItemAnimator(new DefaultItemAnimator());
+        rvToDo.setHasFixedSize(true);
+
+        this.refreshLayout.setOnRefreshListener(this);
+        this.refreshLayout.setColorSchemeColors(
+                getResources().getColor(R.color.backgroundDeleteDoneColor),
+                getResources().getColor(R.color.backgroundDeleteCriticalColor),
+                getResources().getColor(R.color.backgroundDeleteWaitColor));
+
+        SlideInDownAnimator animator = new SlideInDownAnimator();
+        animator.setInterpolator(new OvershootInterpolator());
+        rvToDo.setItemAnimator(animator);
+
+        ScaleInAnimationAdapter alphaAdapter = new ScaleInAnimationAdapter(this.adapter);
+        alphaAdapter.setDuration(1000);
+        alphaAdapter.setInterpolator(new OvershootInterpolator(1f));
+        alphaAdapter.setFirstOnly(false);
+        rvToDo.setAdapter(alphaAdapter);
 
         //code api
         this.fillList();
@@ -88,11 +110,11 @@ public class ListFragment extends Fragment implements
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnItemToDoListener) {
+            mListener = (OnItemToDoListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnItemToDoResultListener");
         }
     }
 
@@ -109,6 +131,11 @@ public class ListFragment extends Fragment implements
             case ApiClient.TASK_LIST:
                 ToDoList toDoList = new Gson().fromJson(content, ToDoList.class);
                 this.adapter.setData(toDoList.getData());
+                break;
+
+            case ApiClient.TASK_DELETE:
+                Toast.makeText(getActivity(), "Deleted: " + content, Toast.LENGTH_SHORT).show();
+                this.adapter.setData();
                 break;
         }
     }
@@ -134,7 +161,7 @@ public class ListFragment extends Fragment implements
         }
         else
         {
-            //second fragment, coming soon
+            mListener.onItemToDo(UPDATE, itemToDo.getId());
         }
     }
 
@@ -155,7 +182,6 @@ public class ListFragment extends Fragment implements
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
                 //code api
                 ApiCaller caller = ApiClient.setTaskDelete(ListFragment.this, itemToDo.getId().toString());
                 caller.setContextActivity(getActivity());
@@ -169,7 +195,13 @@ public class ListFragment extends Fragment implements
     @OnClick(R.id.fabAdd)
     public void ClickAction()
     {
-        //second fragment, coming soon
+        mListener.onItemToDo(CREATE, 0);
+    }
+
+    @Override
+    public void onRefresh() {
+        fillList();
+        refreshLayout.setRefreshing(false);
     }
 
     private void fillList() {
@@ -179,18 +211,7 @@ public class ListFragment extends Fragment implements
         caller.execute();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public interface OnItemToDoListener {
+        void onItemToDo(int operation, Integer idToDo);
     }
 }

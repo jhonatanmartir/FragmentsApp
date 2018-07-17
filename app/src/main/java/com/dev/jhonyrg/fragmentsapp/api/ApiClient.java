@@ -1,7 +1,5 @@
 package com.dev.jhonyrg.fragmentsapp.api;
 
-import android.app.Activity;
-
 import com.dev.jhonyrg.fragmentsapp.items.ToDo;
 import com.dev.jhonyrg.fragmentsapp.utils.ApiCaller;
 import com.dev.jhonyrg.fragmentsapp.utils.OnApiCallFinish;
@@ -15,12 +13,10 @@ public class ApiClient {
     public static final int TASK_SAVE = 102;
     public static final int TASK_UPDATE = 103;
     public static final int TASK_DELETE = 104;
-    public static final String TITLE = "title";
-    public static final String DESCRIPTION = "description";
-    public static final String DATE = "date";
-    public static final String STATUS = "status";
-
-    private static Activity activity;
+    private static final String TITLE = "title";
+    private static final String DESCRIPTION = "description";
+    private static final String DATE = "date";
+    private static final String STATUS = "status";
 
     public static ApiCaller getTaskList(OnApiCallFinish listener){
         ApiCaller caller = new ApiCaller();
@@ -28,7 +24,6 @@ public class ApiClient {
         caller.setUrl(URL.replace("{id}", ""));
         caller.setRequestId(TASK_LIST);
         caller.setOnApiCallFinish(listener);
-        caller.setContextActivity(activity);
         return caller;
     }
 
@@ -83,9 +78,5 @@ public class ApiClient {
         caller.setRequestId(TASK_UPDATE);
         caller.setOnApiCallFinish(listener);
         return caller;
-    }
-
-    public void setActivity(Activity activity) {
-        this.activity = activity;
     }
 }

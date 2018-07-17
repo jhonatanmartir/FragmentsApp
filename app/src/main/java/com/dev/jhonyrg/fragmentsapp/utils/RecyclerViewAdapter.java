@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.dev.jhonyrg.fragmentsapp.items.ToDo;
 import com.dev.jhonyrg.fragmentsapp.R;
-import com.dev.jhonyrg.fragmentsapp.items.ToDo;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -26,9 +25,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-    public static final int WAIT = 0;
-    public static final int DONE = 1;
-    public static final int CRITICAL = 2;
+    private static final int CURRENTLY = 10;
+    private static final int DONE = 11;
+    private static final int CRITICAL = 12;
 
     private List<ToDo> toDoList;
     private int idLayout;
@@ -47,10 +46,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //Inflar layout item_view
+        //Inflate layout item_view
         View view = LayoutInflater.from(this.context).inflate(idLayout, parent, false);
 
-        //Crear view Holder
+        //Create view Holder
         return new ViewHolder(view);
     }
 
@@ -87,12 +86,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @BindView(R.id.cvItem) CardView cardView;
         @BindView(R.id.lytDelete) LinearLayout layout;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(final ToDo itemToDo, final OnItemClickListener listener, final OnItemLogClickListener longListener)
+        void bind(final ToDo itemToDo, final OnItemClickListener listener, final OnItemLogClickListener longListener)
         {
             this.id.setText(String.valueOf(itemToDo.getId().toString()));
             this.title.setText(itemToDo.getTitle());
@@ -101,7 +100,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
             try {
                 Date dtt = dateFormat.parse(itemToDo.getDate());
-                this.date.setText(dtt.getDay() +"-"+ dtt.getMonth() +"-"+ dtt.getYear());
+                this.date.setText(String.valueOf(dtt.getDay() +"-"+ dtt.getMonth() +"-"+ dtt.getYear()));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -109,25 +108,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             switch (itemToDo.getStatus())
             {
-                case WAIT:
-                    //this.status.setImageResource(R.drawable.calendar_clock);
-                    Picasso.get().load(R.drawable.calendar_clock).into(this.status);
+                case CURRENTLY:
+                    Picasso.get().load(R.drawable.ic_todo_currently).into(this.status);
                     this.cardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.backgroundWaitColor));
                     this.layout.setBackgroundResource(R.color.backgroundDeleteWaitColor);
                     this.delete.setBackgroundResource(R.color.backgroundDeleteWaitColor);
                     break;
 
                 case DONE:
-                    //this.status.setImageResource(R.drawable.calendar_check);
-                    Picasso.get().load(R.drawable.calendar_check).into(this.status);
+                    Picasso.get().load(R.drawable.ic_todo_done).into(this.status);
                     this.cardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.backgroundDoneColor));
                     this.layout.setBackgroundResource(R.color.backgroundDeleteDoneColor);
                     this.delete.setBackgroundResource(R.color.backgroundDeleteDoneColor);
                     break;
 
                 case CRITICAL:
-                    //this.status.setImageResource(R.drawable.calendar_late);
-                    Picasso.get().load(R.drawable.calendar_late).into(this.status);
+                    Picasso.get().load(R.drawable.ic_todo_critical).into(this.status);
                     this.cardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.backgroundCriticalColor));
                     this.layout.setBackgroundResource(R.color.backgroundDeleteCriticalColor);
                     this.delete.setBackgroundResource(R.color.backgroundDeleteCriticalColor);
@@ -154,6 +150,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void setData(List<ToDo> list)
     {
         this.toDoList = list;
+        this.notifyDataSetChanged();
+    }
+
+    public void setData()
+    {
         this.notifyDataSetChanged();
     }
 }

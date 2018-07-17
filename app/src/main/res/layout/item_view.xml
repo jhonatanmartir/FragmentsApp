@@ -9,14 +9,16 @@
     android:layout_marginRight="16dp"
     android:layout_marginTop="8dp"
     android:gravity="center_vertical"
-    app:cardBackgroundColor="@color/primaryLightColor"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="10dp"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:orientation="horizontal"
-        android:baselineAligned="false">
+        android:background="?attr/selectableItemBackground">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -29,7 +31,7 @@
                 android:id="@+id/txtvId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text=""
                 android:visibility="gone" />
 
             <TextView
@@ -38,10 +40,10 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="4dp"
                 android:text="@string/txtvTitle"
-                android:textColor="@color/primaryTextColor"
+                android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:fontFamily="sans-serif" />
+                app:fontFamily="@font/roboto" />
 
             <TextView
                 android:id="@+id/txtvDescription"
@@ -50,16 +52,16 @@
                 android:paddingTop="4dp"
                 android:singleLine="false"
                 android:text="@string/txtvDescription"
-                android:textColor="@color/primaryTextColor"
+                android:textColor="@android:color/black"
                 android:textSize="18sp"
-                app:fontFamily="sans-serif" />
+                app:fontFamily="@font/roboto" />
 
             <View style="@style/Divider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="right|center_vertical"
+                android:gravity="end|center_vertical"
                 android:orientation="horizontal"
                 android:paddingTop="8dp">
 
@@ -67,20 +69,22 @@
                     android:id="@+id/imgStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@null"
                     android:scaleType="center"
-                    app:srcCompat="@drawable/calendar_remove" />
+                    app:srcCompat="@drawable/ic_todo_done" />
 
                 <TextView
                     android:id="@+id/txtvDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right|center_vertical"
+                    android:gravity="end|center_vertical"
                     android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
                     android:paddingTop="4dp"
                     android:text="@string/txtvDate"
-                    android:textColor="@color/primaryTextColor"
+                    android:textAllCaps="false"
                     android:textSize="14sp"
-                    app:fontFamily="sans-serif" />
+                    app:fontFamily="@font/roboto" />
             </LinearLayout>
 
         </LinearLayout>
@@ -94,7 +98,6 @@
             android:visibility="gone">
 
             <TextView
-                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|center_horizontal"
@@ -107,10 +110,11 @@
                 android:id="@+id/ibtnDelete"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:background="@color/secondaryDarkColor"
-                app:srcCompat="@drawable/delete_forever" />
+                android:contentDescription="@null"
+                app:srcCompat="@drawable/ic_todo_delete" />
 
         </LinearLayout>
 

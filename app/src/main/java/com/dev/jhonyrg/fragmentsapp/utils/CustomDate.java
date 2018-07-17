@@ -13,44 +13,43 @@ public class CustomDate {
     private static String day = "";
     private static String month = "";
     private static String year = "";
-    private static SimpleDateFormat localFormat = new SimpleDateFormat("dd/MM/yyyy");
-    private static SimpleDateFormat serverFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");  //RFC 822 time zone
+    private final SimpleDateFormat localFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat serverFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");  //RFC 822 time zone
     private static Date date;
-    private static android.icu.text.DateFormat dateFormat;
 
-    public String fromPickerToLocal(String day, String month, int year)
+    /*public String fromPickerToLocal(String day, String month, int year)
     {
-        this.day = day;
-        this.month = month;
-        this.year = String.valueOf(year);
+        CustomDate.day = day;
+        CustomDate.month = month;
+        CustomDate.year = String.valueOf(year);
         dateString = day + "/" + month + "/" + year;
         try {
-            this.date = localFormat.parse(dateString);
+            date = localFormat.parse(dateString);
         } catch (ParseException e) {
             Log.e(TAG, e.getMessage());
         }
 
         return DateFormat.getDateInstance(DateFormat.MEDIUM).format(date);
-    }
+    }*/
 
     public String fromDateToLocal(Date date)
     {
         return DateFormat.getDateInstance(DateFormat.MEDIUM).format(date);
     }
 
-    public String toServer()
+    /*public String toServer()
     {
         dateString = day + "/" + month + "/" + year;
         try {
-            this.date = localFormat.parse(dateString);
+            date = localFormat.parse(dateString);
         } catch (ParseException e) {
             Log.e(TAG, e.getMessage());
         }
 
         return serverFormat.format(date);
-    }
+    }*/
 
-    public String fromDateToServer(Date date)
+    public static String fromDateToServer(Date date)
     {
         return serverFormat.format(date);
     }

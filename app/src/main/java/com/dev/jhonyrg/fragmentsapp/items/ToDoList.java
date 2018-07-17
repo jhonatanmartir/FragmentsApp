@@ -9,7 +9,4 @@ public class ToDoList {
         return data;
     }
 
-    public void setData(List<ToDo> data) {
-        this.data = data;
-    }
 }

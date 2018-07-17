@@ -1,6 +1,7 @@
 package com.dev.jhonyrg.fragmentsapp.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -25,8 +26,8 @@ public class ApiCaller extends AsyncTask<Void, Integer, String> {
     private OnApiCallFinish listener;
     private int requestId;
     private HashMap<String, String> values;
-    private Activity contextActivity;
-    MaterialDialog dialog;
+    private Context contextActivity;
+    private MaterialDialog dialog;
 
     public ApiCaller() {
         this.isPost = false;
@@ -51,31 +52,29 @@ public class ApiCaller extends AsyncTask<Void, Integer, String> {
 
     @Override
     protected String doInBackground(Void... voids) {
-        OkHttpClient client = new OkHttpClient();
-
-        //verificar si es un POST
+        //verify if is a POST
         if(isPost)
         {
-            //verificar si la url no esta vacía
+            //verify if url is not empty
             if(!this.url.equals(""))
             {
                 Request request;
-                //verificar que existan key-values para el POST
+                //verify exist key-values to POST
                  if(!values.isEmpty())
                  {
-                     //crear un builder que contega los valores
+                     //create a builder with key-values
                      FormBody.Builder builderBody = new FormBody.Builder();
 
-                     //agregar los key-values al builder
+                     //add key-values to builder
                      for (Map.Entry<String, String> pair:
                              values.entrySet()) {
                          builderBody.add(pair.getKey(), pair.getValue());
                      }
 
-                     //crear el body del POST con los valores que contiene el builder
+                     //create body POST with key-values that contain the builder
                      RequestBody body = builderBody.build();
 
-                     //Ejecutar POST
+                     //Execute POST
                      request = new Request.Builder().url(this.url).post(body).build();
                  }
                  else
@@ -83,8 +82,8 @@ public class ApiCaller extends AsyncTask<Void, Integer, String> {
                      request = new Request.Builder().delete().url(this.url).build();
                  }
 
-                //Procesar la respuesta del service
-                return onResponce(request);
+                //Process the response of service
+                return onResponse(request);
             }
             return "";
         }
@@ -92,16 +91,16 @@ public class ApiCaller extends AsyncTask<Void, Integer, String> {
         {
             Request.Builder requestBuilder = new Request.Builder();
 
-            //Evaluar condiciones
+            //Evaluate conditions
             if(!this.url.equals(""))
             {
                 requestBuilder.url(this.url);
 
-                //Ejecutar llamada al service
+                //Execute call at service
                 Request request = requestBuilder.build();
 
-                //Procesar la respuesta del service
-                return onResponce(request);
+                //Process response of service
+                return onResponse(request);
             }
             return "";
         }
@@ -130,7 +129,7 @@ public class ApiCaller extends AsyncTask<Void, Integer, String> {
         }
     }
 
-    private String onResponce(Request request)
+    private String onResponse(Request request)
     {
         OkHttpClient client = new OkHttpClient();
         try

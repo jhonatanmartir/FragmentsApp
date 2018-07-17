@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:orientation="vertical"
+    tools:context=".fragments.EditFragment">
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/etxtTitle"
+        met_floatingLabel="highlight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/txtvTitle"
+        android:inputType="textCapSentences|textPersonName"
+        android:lines="1"
+        android:paddingBottom="8dp"
+        android:textSize="17sp"
+        app:met_floatingLabel="highlight" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/etxtDescription"
+        met_floatingLabel="highlight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/txtvDescription"
+        android:inputType="textCapSentences|textLongMessage"
+        android:paddingBottom="8dp"
+        android:textSize="17sp"
+        app:met_floatingLabel="highlight" />
+
+    <!---->
+
+    <LinearLayout
+        android:id="@+id/txtvDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/etxtDate"
+            met_floatingLabel="highlight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:enabled="false"
+            android:hint="@string/txtvDate"
+            android:inputType="datetime"
+            android:paddingBottom="8dp"
+            android:textSize="17sp"
+            app:met_floatingLabel="highlight" />
+
+        <ImageButton
+            android:id="@+id/ibtnDate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/cardview_shadow_end_color"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_todo_select_date" />
+    </LinearLayout>
+
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:paddingBottom="8dp"
+        android:text="@string/swStatus"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <RadioGroup
+        android:id="@+id/rbgStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:checkedButton="@+id/rbWait"
+        android:orientation="vertical"
+        android:textAlignment="textStart"
+        android:visibility="invisible"
+        tools:targetApi="jelly_bean_mr1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="@string/swStatus"
+            android:textSize="17sp" />
+
+        <RadioButton
+            android:id="@+id/rbWait"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_gravity="start"
+            android:paddingBottom="8dp"
+            android:text="@string/rbWait"
+            android:textAlignment="textStart"
+            android:textSize="15sp"
+            tools:targetApi="jelly_bean_mr1" />
+
+        <RadioButton
+            android:id="@+id/rbDone"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_gravity="start"
+            android:paddingBottom="8dp"
+            android:text="@string/rbDone"
+            android:textSize="15sp" />
+
+        <RadioButton
+            android:id="@+id/rbCritical"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_gravity="start"
+            android:paddingBottom="8dp"
+            android:text="@string/rbCritical"
+            android:textSize="15sp" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginRight="4dp"
+            android:layout_weight="1"
+            android:background="@color/secondaryColor"
+            android:text="@string/btnCancel"
+            android:textColor="@color/secondaryTextColor"
+            android:visibility="gone"
+            android:layout_marginEnd="4dp"
+            android:layout_marginLeft="8dp" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:background="@color/primaryColor"
+            android:text="@string/btnSave"
+            android:textColor="@color/secondaryTextColor" />
+    </LinearLayout>
+
+</LinearLayout>
