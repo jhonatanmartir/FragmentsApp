@@ -108,22 +108,35 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             switch (itemToDo.getStatus())
             {
+<<<<<<< HEAD
                 case CURRENTLY:
                     Picasso.get().load(R.drawable.ic_todo_currently).into(this.status);
+=======
+                case WAIT:
+                    this.status.setImageResource(R.drawable.calendar_clock);
+>>>>>>> a2b44fabf08f73efd7fa31e9914e166951d68183
                     this.cardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.backgroundWaitColor));
                     this.layout.setBackgroundResource(R.color.backgroundDeleteWaitColor);
                     this.delete.setBackgroundResource(R.color.backgroundDeleteWaitColor);
                     break;
 
                 case DONE:
+<<<<<<< HEAD
                     Picasso.get().load(R.drawable.ic_todo_done).into(this.status);
+=======
+                    this.status.setImageResource(R.drawable.calendar_check);
+>>>>>>> a2b44fabf08f73efd7fa31e9914e166951d68183
                     this.cardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.backgroundDoneColor));
                     this.layout.setBackgroundResource(R.color.backgroundDeleteDoneColor);
                     this.delete.setBackgroundResource(R.color.backgroundDeleteDoneColor);
                     break;
 
                 case CRITICAL:
+<<<<<<< HEAD
                     Picasso.get().load(R.drawable.ic_todo_critical).into(this.status);
+=======
+                    this.status.setImageResource(R.drawable.calendar_late);
+>>>>>>> a2b44fabf08f73efd7fa31e9914e166951d68183
                     this.cardView.setCardBackgroundColor(itemView.getResources().getColor(R.color.backgroundCriticalColor));
                     this.layout.setBackgroundResource(R.color.backgroundDeleteCriticalColor);
                     this.delete.setBackgroundResource(R.color.backgroundDeleteCriticalColor);
